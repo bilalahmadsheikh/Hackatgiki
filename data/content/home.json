@@ -5,9 +5,21 @@
     "heading": "HackatGIKI",
     "description": "Build. Compete. Innovate. Shape the future of AI.",
     "buttons": [
-      { "label": "Apply Now →", "url": "https://docs.google.com/forms/d/e/1FAIpQLSeRvf4ISeN6IBA8GTt_SABqnUEiTxTfFPSM8Dj5qOUxxBbLxw/viewform", "variant": "primary" },
-      { "label": "Partner with us", "url": "/partnership", "variant": "primary" },
-      { "label": "Learn More", "url": "/learn-more", "variant": "outline" }
+      {
+        "label": "Apply Now →",
+        "url": "https://docs.google.com/forms/d/e/1FAIpQLSeRvf4ISeN6IBA8GTt_SABqnUEiTxTfFPSM8Dj5qOUxxBbLxw/viewform",
+        "variant": "primary"
+      },
+      {
+        "label": "Partner with us",
+        "url": "/partnership",
+        "variant": "primary"
+      },
+      {
+        "label": "Learn More",
+        "url": "/learn-more",
+        "variant": "outline"
+      }
     ]
   },
   "collaboration": {
@@ -17,21 +29,49 @@
     "eyebrow": "The Journey",
     "heading": "How It Works",
     "steps": [
-      { "title": "Apply", "description": "Submit your application individually or with a team of up to 4 builders." },
-      { "title": "Ideate", "description": "Choose a challenge track or bring your own AI moonshot idea to life." },
-      { "title": "Hack", "description": "24 hours of intense building, supported by world-class mentors & tools." },
-      { "title": "Pitch", "description": "Present your functioning prototype to our panel of elite judges & VCs." }
+      {
+        "title": "Apply",
+        "description": "Submit your application individually or with a team of up to 4 builders."
+      },
+      {
+        "title": "Ideate",
+        "description": "Choose a challenge track or bring your own AI moonshot idea to life."
+      },
+      {
+        "title": "Hack",
+        "description": "24 hours of intense building, supported by world-class mentors & tools."
+      },
+      {
+        "title": "Pitch",
+        "description": "Present your functioning prototype to our finalist review panel."
+      }
     ]
   },
   "schedule": {
     "eyebrow": "The Blueprint",
     "heading": "Event Weekend",
-    "description": "A high-octane 24-hour sprint. Kick-off on Saturday night, pitch to the judges Sunday night. All global hubs mirror the same tight schedule (PKT).",
+    "description": "A high-octane 24-hour sprint. Kick-off on Saturday night, finalist review on Sunday night. All global hubs mirror the same tight schedule (PKT).",
     "events": [
-      { "time": "Sat, 8:15 PM PKT", "title": "Hackathon Kick-Off", "color": "text-emerald-400" },
-      { "time": "Sat, 10:00 PM PKT", "title": "Hacking Begins", "color": "text-purple-400" },
-      { "time": "Sun, 6:00 PM PKT", "title": "Submission Deadline", "color": "text-red-400" },
-      { "time": "Mon, 12:45 AM PKT", "title": "Awards Ceremony", "color": "text-amber-400" }
+      {
+        "time": "Sat, 8:15 PM PKT",
+        "title": "Hackathon Kick-Off",
+        "color": "text-emerald-400"
+      },
+      {
+        "time": "Sat, 10:00 PM PKT",
+        "title": "Hacking Begins",
+        "color": "text-purple-400"
+      },
+      {
+        "time": "Sun, 6:00 PM PKT",
+        "title": "Submission Deadline",
+        "color": "text-red-400"
+      },
+      {
+        "time": "Mon, 12:45 AM PKT",
+        "title": "Awards Ceremony",
+        "color": "text-amber-400"
+      }
     ]
   }
 }

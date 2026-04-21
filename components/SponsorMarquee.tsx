@@ -76,10 +76,12 @@ export default function SponsorMarquee({
               compact ? "mx-6 h-8" : "mx-8 h-12 xl:mx-16 xl:h-20"
             )}
           >
-            <img
+            <Image
               src={img.src}
               alt={img.alt}
-              style={{ width: "auto" }}
+              width={img.width ?? 220}
+              height={80}
+              unoptimized
               className={cn(
                 "h-full max-h-full w-auto object-contain transition-all duration-300",
                 "opacity-70 hover:opacity-100 xl:scale-125"
@@ -96,10 +98,12 @@ export default function SponsorMarquee({
               compact ? "mx-6 h-8" : "mx-8 h-12 xl:mx-16 xl:h-20"
             )}
           >
-            <img
+            <Image
               src={img.src}
               alt={img.alt}
-              style={{ width: "auto" }}
+              width={img.width ?? 220}
+              height={80}
+              unoptimized
               className={cn(
                 "h-full max-h-full w-auto object-contain transition-all duration-300",
                 "opacity-70 hover:opacity-100 xl:scale-125"

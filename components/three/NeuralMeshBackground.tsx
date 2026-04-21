@@ -7,6 +7,11 @@ const PARTICLE_COUNT = 800
 const CONNECTION_DISTANCE = 1.8
 const SPHERE_RADIUS = 10
 
+function pseudoRandom(seed: number) {
+  const x = Math.sin(seed * 12.9898) * 43758.5453
+  return x - Math.floor(x)
+}
+
 function NeuralMesh() {
   const groupRef = useRef<THREE.Group>(null)
   const { viewport } = useThree()
@@ -16,11 +21,11 @@ function NeuralMesh() {
     const pos = new Float32Array(PARTICLE_COUNT * 3)
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       // Volumetric distribution inside a sphere
-      const u = Math.random()
-      const v = Math.random()
+      const u = pseudoRandom(i * 3 + 1)
+      const v = pseudoRandom(i * 3 + 2)
       const theta = 2 * Math.PI * u
       const phi = Math.acos(2 * v - 1)
-      const r = SPHERE_RADIUS * Math.cbrt(Math.random())
+      const r = SPHERE_RADIUS * Math.cbrt(pseudoRandom(i * 3 + 3))
 
       pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
       pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)

@@ -1,6 +1,9 @@
-import dynamic from "next/dynamic"
+type CMSSection = {
+  _type: string
+  [key: string]: unknown
+}
 
-const sectionComponents: Record<string, React.ComponentType<any>> = {
+const sectionComponents: Record<string, React.ComponentType<CMSSection>> = {
   // We'll map these to actual components once they are created/refactored
   // heroSection: dynamic(() => import("./HeroSection")),
   // featureCardsSection: dynamic(() => import("./FeatureCardsSection")),
@@ -15,7 +18,7 @@ const sectionComponents: Record<string, React.ComponentType<any>> = {
 }
 
 interface SectionRendererProps {
-  sections: Array<{ _type: string; [key: string]: any }>
+  sections: CMSSection[]
 }
 
 export default function SectionRenderer({ sections }: SectionRendererProps) {

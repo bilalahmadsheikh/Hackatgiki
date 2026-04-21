@@ -1,6 +1,5 @@
 import NeuralMeshBg from "@/components/three/NeuralMeshBg"
 import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
 import GlassCard from "@/components/GlassCard"
 import AnimatedButton from "@/components/AnimatedButton"
 import RevealOnScroll from "@/components/RevealOnScroll"
@@ -124,7 +123,7 @@ Best regards,
                   icon: <Users className="w-8 h-8 xl:w-10 xl:h-10" />, 
                   title: "Talent Pipeline", 
                   subtitle: "Recruit Top Engineers", 
-                  desc: "Identify and recruit the most ambitious AI developers globally. Watch them build under pressure and interact with them firsthand as mentors or judges." 
+                  desc: "Identify and recruit the most ambitious AI developers globally. Watch them build under pressure and interact with them firsthand as mentors or reviewers." 
                 },
                 { 
                   icon: <Globe className="w-8 h-8 xl:w-10 xl:h-10" />, 

@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
-import { SECURITY, checkRateLimit } from "@/lib/security"
+import { SECURITY, checkRateLimit, getClientIp } from "@/lib/security"
 
 export async function POST(request: Request) {
   // 0. Rate Limiting (10 requests per minute per IP)
-  const ip = request.headers.get("x-forwarded-for") || "unknown"
-  if (!checkRateLimit(ip, 10, 60 * 1000)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 })
+  const ip = getClientIp(request)
+  if (!checkRateLimit(`${ip}:cms-upload`, 10, 60 * 1000)) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": "60" } }
+    )
   }
 
   // 1. Authenticate (depends purely on the environment variable)
@@ -101,8 +104,9 @@ export async function POST(request: Request) {
       localSuccess 
     })
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to upload image"
     console.error("CMS Upload Error:", error)
-    return NextResponse.json({ error: error.message || "Failed to upload image" }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

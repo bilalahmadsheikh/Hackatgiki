@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import Image from "next/image"
+import { useCallback, useEffect, useState } from "react"
 import { Lock, Save, Image as ImageIcon, FileJson, Loader2, Upload, CheckCircle2, XCircle } from "lucide-react"
 
 const PAGES = [
@@ -11,8 +12,12 @@ const PAGES = [
 ]
 
 export default function CMSAdminPage() {
-  const [password, setPassword] = useState("")
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState(() =>
+    typeof window === "undefined" ? "" : sessionStorage.getItem("cms_auth") ?? ""
+  )
+  const [isAuthenticated, setIsAuthenticated] = useState(() =>
+    typeof window === "undefined" ? false : Boolean(sessionStorage.getItem("cms_auth"))
+  )
   const [activeTab, setActiveTab] = useState("editor") // 'editor' | 'media'
   
   // Editor State
@@ -28,36 +33,7 @@ export default function CMSAdminPage() {
   const [isUploading, setIsUploading] = useState(false)
   const [lastUploadedUrl, setLastUploadedUrl] = useState("")
 
-  useEffect(() => {
-    // Check if we have a saved password in session storage
-    const saved = sessionStorage.getItem("cms_auth")
-    if (saved) {
-      setPassword(saved)
-      setIsAuthenticated(true)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (isAuthenticated && activeTab === "editor") {
-      fetchPageContent(activePage.path)
-    }
-  }, [isAuthenticated, activePage, activeTab])
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (password) {
-      sessionStorage.setItem("cms_auth", password)
-      setIsAuthenticated(true)
-    }
-  }
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("cms_auth")
-    setPassword("")
-    setIsAuthenticated(false)
-  }
-
-  const fetchPageContent = async (filePath: string) => {
+  const fetchPageContent = useCallback(async (filePath: string) => {
     setIsFetching(true)
     setSaveStatus({ type: null, msg: "" })
     try {
@@ -75,18 +51,42 @@ export default function CMSAdminPage() {
           throw new Error(data.error)
         }
       }
-    } catch (err: any) {
-      setSaveStatus({ type: "error", msg: `Failed to load: ${err.message}` })
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error"
+      setSaveStatus({ type: "error", msg: `Failed to load: ${message}` })
     } finally {
       setIsFetching(false)
     }
+  }, [])
+
+  useEffect(() => {
+    if (isAuthenticated && activeTab === "editor") {
+      const timer = window.setTimeout(() => {
+        void fetchPageContent(activePage.path)
+      }, 0)
+      return () => window.clearTimeout(timer)
+    }
+  }, [activePage.path, activeTab, fetchPageContent, isAuthenticated])
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (password) {
+      sessionStorage.setItem("cms_auth", password)
+      setIsAuthenticated(true)
+    }
+  }
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("cms_auth")
+    setPassword("")
+    setIsAuthenticated(false)
   }
 
   const handleSave = async () => {
     // Basic JSON validation before sending
     try {
       JSON.parse(jsonContent)
-    } catch (e) {
+    } catch {
       setSaveStatus({ type: "error", msg: "Invalid JSON format. Please fix syntax errors before saving." })
       return
     }
@@ -116,8 +116,9 @@ export default function CMSAdminPage() {
       } else {
         throw new Error(data.error)
       }
-    } catch (err: any) {
-      setSaveStatus({ type: "error", msg: err.message })
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to save"
+      setSaveStatus({ type: "error", msg: message })
     } finally {
       setIsSaving(false)
     }
@@ -150,8 +151,9 @@ export default function CMSAdminPage() {
       } else {
         throw new Error(data.error)
       }
-    } catch (err: any) {
-      setSaveStatus({ type: "error", msg: err.message })
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to upload"
+      setSaveStatus({ type: "error", msg: message })
     } finally {
       setIsUploading(false)
     }
@@ -336,7 +338,7 @@ export default function CMSAdminPage() {
                   </div>
                   
                   <div className="mt-6 border border-[var(--border-subtle)] rounded overflow-hidden max-w-xs">
-                    <img src={lastUploadedUrl} alt="Uploaded preview" className="w-full h-auto" />
+                    <Image src={lastUploadedUrl} alt="Uploaded preview" width={320} height={240} className="w-full h-auto" unoptimized />
                   </div>
                 </div>
               )}

@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server"
 import fs from "fs"
 import path from "path"
-import { SECURITY } from "@/lib/security"
+import { SECURITY, checkRateLimit, getClientIp } from "@/lib/security"
 
 export async function GET(request: Request) {
+  const ip = getClientIp(request)
+  if (!checkRateLimit(`${ip}:cms-read`, 120, 60 * 1000)) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": "60" } }
+    )
+  }
+
   const { searchParams } = new URL(request.url)
   const fileParams = searchParams.get("file") // e.g., "data/content/home.json"
   
@@ -66,8 +74,9 @@ export async function GET(request: Request) {
     const content = Buffer.from(data.content, "base64").toString("utf-8")
     
     return NextResponse.json({ content, sha: data.sha })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to fetch from GitHub"
     console.error("CMS Read Error:", error)
-    return NextResponse.json({ error: error.message || "Failed to fetch from GitHub" }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

@@ -27,7 +27,7 @@ export default function LearnMorePage() {
               About <span className="text-purple-400 electric-text-glow">HackatGIKI</span>
             </h1>
             <p className="text-xl sm:text-2xl xl:text-3xl text-[var(--text-secondary)] max-w-4xl mx-auto">
-              HackatGIKI is the GIKI chapter of the Global AI Hackathon, organized in collaboration with Hack-Nation and the MIT Sloan AI Club. We connect Pakistan's top tech talent with the world's most ambitious AI builders.
+              HackatGIKI is the GIKI chapter of the Global AI Hackathon, organized in collaboration with Hack-Nation and the MIT Sloan AI Club. We connect Pakistan&apos;s top tech talent with the world&apos;s most ambitious AI builders.
             </p>
           </RevealOnScroll>
         </section>
@@ -47,7 +47,7 @@ export default function LearnMorePage() {
                   {
                     icon: <Rocket className="w-8 h-8 xl:w-10 xl:h-10" />,
                     title: "Global AI Hackathon",
-                    desc: "A 24-hour intensive hackathon where teams of up to 4 build AI-powered solutions, compete for $30k+ in prizes, and pitch to world-class judges.",
+                    desc: "A 24-hour intensive hackathon where teams of up to 4 build AI-powered solutions, compete for $30k+ in prizes, and pitch to a world-class finalist review panel.",
                     href: "/global-ai-hackathon",
                     color: "purple"
                   },
@@ -150,7 +150,7 @@ export default function LearnMorePage() {
               Ready to Join?
             </h2>
             <p className="text-xl xl:text-2xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10">
-              Whether you want to compete, mentor, sponsor, or invest — there's a place for you.
+              Whether you want to compete, mentor, sponsor, or invest — there&apos;s a place for you.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 xl:gap-8">
               <AnimatedButton href="https://docs.google.com/forms/d/e/1FAIpQLSeRvf4ISeN6IBA8GTt_SABqnUEiTxTfFPSM8Dj5qOUxxBbLxw/viewform" variant="primary" className="xl:px-12 xl:py-6 xl:text-xl rounded-full">

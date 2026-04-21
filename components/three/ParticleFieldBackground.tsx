@@ -1,26 +1,32 @@
 "use client"
-import { useRef, useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
 const PARTICLE_COUNT = 200
 
+function pseudoRandom(seed: number) {
+  const x = Math.sin(seed * 12.9898) * 43758.5453
+  return x - Math.floor(x)
+}
+
 function ParticleField() {
   const pointsRef = useRef<THREE.Points>(null)
+  const velocitiesRef = useRef<Float32Array | null>(null)
 
-  // Random positions and velocities
+  // Deterministic positions and velocities
   const { geometry, velocities } = useMemo(() => {
     const pos = new Float32Array(PARTICLE_COUNT * 3)
     const vel = new Float32Array(PARTICLE_COUNT * 3)
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 20
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 14
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 10
+      pos[i * 3] = (pseudoRandom(i * 6 + 1) - 0.5) * 20
+      pos[i * 3 + 1] = (pseudoRandom(i * 6 + 2) - 0.5) * 14
+      pos[i * 3 + 2] = (pseudoRandom(i * 6 + 3) - 0.5) * 10
 
-      vel[i * 3] = (Math.random() - 0.5) * 0.003
-      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.002
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.001
+      vel[i * 3] = (pseudoRandom(i * 6 + 4) - 0.5) * 0.003
+      vel[i * 3 + 1] = (pseudoRandom(i * 6 + 5) - 0.5) * 0.002
+      vel[i * 3 + 2] = (pseudoRandom(i * 6 + 6) - 0.5) * 0.001
     }
 
     const geo = new THREE.BufferGeometry()
@@ -29,12 +35,18 @@ function ParticleField() {
     return { geometry: geo, velocities: vel }
   }, [])
 
+  useEffect(() => {
+    velocitiesRef.current = velocities
+  }, [velocities])
+
   // Gentle drift
   useFrame(() => {
     if (pointsRef.current) {
       const posAttr = pointsRef.current.geometry.attributes
         .position as THREE.BufferAttribute
       const posArray = posAttr.array as Float32Array
+      const velocities = velocitiesRef.current
+      if (!velocities) return
 
       for (let i = 0; i < PARTICLE_COUNT; i++) {
         posArray[i * 3] += velocities[i * 3]

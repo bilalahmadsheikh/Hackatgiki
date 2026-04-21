@@ -14,7 +14,6 @@ import {
   Target,
   UserCheck,
   MapPin,
-  Clock,
   Brain,
   Code,
   Rocket,
@@ -101,7 +100,7 @@ export default function GlobalAiHackathon() {
             </div>
 
             <p className="mb-12 max-w-4xl mx-auto text-xl xl:text-3xl xl:leading-relaxed text-[var(--text-secondary)]">
-              The world's premier AI innovation challenge where brilliant minds converge to build groundbreaking solutions that shape the future of artificial intelligence.
+              The world&apos;s premier AI innovation challenge where brilliant minds converge to build groundbreaking solutions that shape the future of artificial intelligence.
             </p>
             
             <AnimatedButton variant="primary" href={REGISTRATION_URL} className="xl:px-12 xl:py-6 xl:text-xl rounded-full">
@@ -123,7 +122,7 @@ export default function GlobalAiHackathon() {
                 { step: "01", title: "Apply", desc: "Submit your application individually or with a team of up to 4 builders.", icon: <UserCheck className="w-8 h-8 xl:w-12 xl:h-12 text-purple-400" /> },
                 { step: "02", title: "Ideate", desc: "Choose a challenge track or bring your own AI moonshot idea to life.", icon: <Brain className="w-8 h-8 xl:w-12 xl:h-12 text-blue-400" /> },
                 { step: "03", title: "Hack", desc: "24 hours of intense building, supported by world-class mentors.", icon: <Code className="w-8 h-8 xl:w-12 xl:h-12 text-emerald-400" /> },
-                { step: "04", title: "Pitch", desc: "Present your functioning prototype to our panel of elite judges.", icon: <Rocket className="w-8 h-8 xl:w-12 xl:h-12 text-pink-400" /> }
+                { step: "04", title: "Pitch", desc: "Present your functioning prototype to our finalist review panel.", icon: <Rocket className="w-8 h-8 xl:w-12 xl:h-12 text-pink-400" /> }
               ].map((item, idx) => (
                 <RevealOnScroll key={idx} delay={idx * 150}>
                   <GlassCard hover className="h-full flex flex-col items-start p-8 xl:p-12 relative overflow-hidden group">
@@ -184,7 +183,7 @@ export default function GlobalAiHackathon() {
                 <div className="flex flex-col flex-grow">
                   {[
                     { e: "Submission Deadline", t: "Sun 6:00 PM", c: "red" },
-                    { e: "Jury to Select Top 16", t: "Sun by 11:00 PM", c: "neutral" },
+                    { e: "Finalist Selection (Top 16)", t: "Sun by 11:00 PM", c: "neutral" },
                     { e: "Finalist Pitches (2 Mins)", t: "Sun 11:15 \u2013 Mon 12:30 AM", c: "neutral" },
                     { e: "Awards Ceremony", t: "Mon 12:45 AM", c: "amber" },
                   ].map((row, i) => (
@@ -363,7 +362,7 @@ export default function GlobalAiHackathon() {
                 <Zap className="w-8 h-8 xl:w-12 xl:h-12 text-yellow-400 mb-6" />
                 <h2 className="text-3xl xl:text-6xl font-bold mb-6 font-display">Ready to Join the Challenge?</h2>
                 <p className="text-[var(--text-secondary)] xl:text-2xl leading-relaxed mb-10">
-                  Don't miss this opportunity to showcase your AI skills, learn from experts, and compete for amazing prizes. Registration is now open!
+                  Don&apos;t miss this opportunity to showcase your AI skills, learn from experts, and compete for amazing prizes. Registration is now open!
                 </p>
                 <AnimatedButton href={REGISTRATION_URL} variant="primary" className="xl:py-6 xl:px-10 xl:text-xl rounded-full">
                   Sign Up for 5th Hackathon

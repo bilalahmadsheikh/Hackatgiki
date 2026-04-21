@@ -1,9 +1,7 @@
 import NeuralMeshBg from "@/components/three/NeuralMeshBg"
 import Navbar from "@/components/Navbar"
-import Footer from "@/components/Footer"
-import GlassCard from "@/components/GlassCard"
-import AnimatedButton from "@/components/AnimatedButton"
 import RevealOnScroll from "@/components/RevealOnScroll"
+import Image from "next/image"
 import {
   Rocket,
   Target,
@@ -137,7 +135,7 @@ export default function VentureTrackPage() {
                 Why Choose Venture Track?
               </h2>
               <p className="text-xl xl:text-3xl text-[var(--text-secondary)] max-w-4xl mx-auto">
-                Comprehensive support system designed to maximize your startup's potential for success.
+                Comprehensive support system designed to maximize your startup&apos;s potential for success.
               </p>
             </div>
 
@@ -201,14 +199,17 @@ export default function VentureTrackPage() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/10 rounded-full blur-[80px] pointer-events-none" />
               
               <div className="bg-white/90 px-8 py-5 xl:px-12 xl:py-8 rounded-2xl shadow-[0_0_50px_-12px_rgba(255,255,255,0.3)] mb-10 relative z-10 transition-transform duration-500 hover:scale-105">
-                <img 
-                  src="https://cdn.prod.website-files.com/6621450113fa0186b23a5e6f/664e10aecdef7825d045a0dc_EWOR%20Horizontal%20Dark.svg" 
-                  alt="EWOR Partner Logo" 
+                <Image
+                  src="https://cdn.prod.website-files.com/6621450113fa0186b23a5e6f/664e10aecdef7825d045a0dc_EWOR%20Horizontal%20Dark.svg"
+                  alt="EWOR Partner Logo"
+                  width={480}
+                  height={120}
                   className="h-10 sm:h-16 xl:h-24 w-auto"
+                  unoptimized
                 />
               </div>
               <p className="text-purple-100 xl:text-3xl font-medium tracking-wide text-center px-4 max-w-3xl relative z-10">
-                EWOR is a radically selective fellowship backing the world's top 0.1% of founders.
+                EWOR is a radically selective fellowship backing the world&apos;s top 0.1% of founders.
               </p>
             </div>
           </RevealOnScroll>

@@ -1,22 +1,53 @@
-import { NextResponse } from "next/server";
 import path from "path";
 
 // Extremely simple in-memory rate limiter for serverless environment
 // Note: In a real multi-instance production environment, use Redis (e.g., @upstash/ratelimit)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
-export function checkRateLimit(ip: string, limit: number, windowMs: number): boolean {
+const MAX_RATE_LIMIT_KEYS = 5000;
+
+function cleanupExpiredRateLimitEntries(now: number) {
+  for (const [key, record] of rateLimitMap.entries()) {
+    if (now > record.resetTime) {
+      rateLimitMap.delete(key);
+    }
+  }
+}
+
+function enforceMapBounds() {
+  if (rateLimitMap.size <= MAX_RATE_LIMIT_KEYS) return;
+  const entries = [...rateLimitMap.entries()].sort((a, b) => a[1].resetTime - b[1].resetTime);
+  const toDelete = entries.slice(0, rateLimitMap.size - MAX_RATE_LIMIT_KEYS);
+  for (const [key] of toDelete) {
+    rateLimitMap.delete(key);
+  }
+}
+
+export function getClientIp(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for");
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(",")[0]?.trim();
+    if (firstIp) return firstIp;
+  }
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) return realIp.trim();
+  return "unknown";
+}
+
+export function checkRateLimit(key: string, limit: number, windowMs: number): boolean {
   const now = Date.now();
-  const record = rateLimitMap.get(ip);
+  cleanupExpiredRateLimitEntries(now);
+  enforceMapBounds();
+  const record = rateLimitMap.get(key);
 
   if (!record) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
+    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
     return true; // Allowed
   }
 
   if (now > record.resetTime) {
     // Window expired, reset
-    rateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
+    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs });
     return true; // Allowed
   }
 

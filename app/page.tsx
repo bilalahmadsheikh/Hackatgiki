@@ -4,19 +4,12 @@ import Footer from "@/components/Footer"
 import GlassCard from "@/components/GlassCard"
 import SponsorMarquee from "@/components/SponsorMarquee"
 import AnimatedButton from "@/components/AnimatedButton"
-import ParticleBackground from "@/components/ParticleBackground"
 import LogoDisplay from "@/components/LogoDisplay"
 import RevealOnScroll from "@/components/RevealOnScroll"
 import {
   Calendar,
-  Globe,
-  Lightbulb,
-  Users,
-  Trophy,
-  Target,
   UserCheck,
   MapPin,
-  Clock,
   Brain,
   Code,
   Rocket
@@ -31,7 +24,7 @@ import {
 } from "@/lib/logos"
 import content from "@/data/content/home.json"
 
-const REGISTRATION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeRvf4ISeN6IBA8GTt_SABqnUEiTxTfFPSM8Dj5qOUxxBbLxw/viewform"
+type ButtonVariant = "primary" | "outline"
 
 export default function Home() {
   return (
@@ -62,7 +55,7 @@ export default function Home() {
           {/* CTA Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4 xl:gap-8 mt-4">
             {content.hero.buttons.map((btn, i) => (
-              <AnimatedButton key={i} href={btn.url} variant={btn.variant as any} className="xl:px-12 xl:py-6 xl:text-xl 2xl:px-16 2xl:py-8 2xl:text-2xl">
+              <AnimatedButton key={i} href={btn.url} variant={btn.variant as ButtonVariant} className="xl:px-12 xl:py-6 xl:text-xl 2xl:px-16 2xl:py-8 2xl:text-2xl">
                 {btn.label}
               </AnimatedButton>
             ))}
@@ -178,12 +171,8 @@ export default function Home() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-10 w-full">
               {content.howItWorks.steps.map((item, idx) => {
-                const icons = [
-                  <UserCheck className="w-8 h-8 xl:w-12 xl:h-12 text-purple-400" />,
-                  <Brain className="w-8 h-8 xl:w-12 xl:h-12 text-blue-400" />,
-                  <Code className="w-8 h-8 xl:w-12 xl:h-12 text-emerald-400" />,
-                  <Rocket className="w-8 h-8 xl:w-12 xl:h-12 text-pink-400" />
-                ];
+                const icons = [UserCheck, Brain, Code, Rocket]
+                const StepIcon = icons[idx] || icons[0]
                 return (
                   <RevealOnScroll key={idx} delay={idx * 150}>
                     <GlassCard hover className="h-full flex flex-col items-start p-8 xl:p-12 relative overflow-hidden group">
@@ -191,7 +180,7 @@ export default function Home() {
                         {`0${idx + 1}`}
                       </div>
                       <div className="mb-6 xl:mb-10 bg-white/5 p-4 rounded-2xl border border-white/10">
-                        {icons[idx] || icons[0]}
+                        <StepIcon className="w-8 h-8 xl:w-12 xl:h-12 text-purple-400" />
                       </div>
                       <h3 className="text-2xl xl:text-4xl font-bold mb-4">{item.title}</h3>
                       <p className="text-[var(--text-secondary)] xl:text-xl leading-relaxed">{item.description}</p>
@@ -199,38 +188,6 @@ export default function Home() {
                   </RevealOnScroll>
                 );
               })}
-            </div>
-          </RevealOnScroll>
-        </section>
-
-        {/* ═══ SECTION E: Speakers & Mentors ═══ */}
-        <section className="w-full px-4 sm:px-8 xl:px-24 py-16 xl:py-24 bg-white/[0.01] border-y border-white/[0.05]" id="speakers">
-          <RevealOnScroll>
-            <div className="text-center mb-16 xl:mb-24">
-              <span className="text-accent-secondary font-bold tracking-widest uppercase text-sm xl:text-lg mb-4 block">
-                Learn from the best
-              </span>
-              <h2 className="text-4xl sm:text-6xl xl:text-8xl font-display font-bold">
-                Speakers & Mentors
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 xl:gap-12 w-full">
-              {[1, 2, 3, 4].map((i) => (
-                <RevealOnScroll key={i} delay={i * 100}>
-                  <div className="group cursor-pointer">
-                    <div className="w-full aspect-[4/5] bg-slate-800/50 rounded-3xl border border-white/10 overflow-hidden mb-6 relative">
-                      {/* Avatar Placeholder */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 group-hover:scale-110 transition-transform duration-700" />
-                      <div className="absolute inset-0 flex items-center justify-center text-white/20">
-                        <Users className="w-20 h-20" />
-                      </div>
-                    </div>
-                    <h4 className="text-xl xl:text-3xl font-bold group-hover:text-purple-400 transition-colors">Amazing Speaker {i}</h4>
-                    <p className="text-sm xl:text-lg text-[var(--text-secondary)] mt-1">Founding Partner, XYZ</p>
-                  </div>
-                </RevealOnScroll>
-              ))}
             </div>
           </RevealOnScroll>
         </section>
@@ -278,37 +235,6 @@ export default function Home() {
                   </div>
                 </GlassCard>
               </div>
-            </div>
-          </RevealOnScroll>
-        </section>
-
-        {/* ═══ SECTION G: Judges ═══ */}
-        <section className="w-full px-4 sm:px-8 xl:px-24 py-16 xl:py-24 bg-white/[0.01] border-y border-white/[0.05]" id="judges">
-          <RevealOnScroll>
-            <div className="text-center mb-16 xl:mb-24">
-              <span className="text-amber-400 font-bold tracking-widest uppercase text-sm xl:text-lg mb-4 block">
-                The Evaluators
-              </span>
-              <h2 className="text-4xl sm:text-6xl xl:text-8xl font-display font-bold">
-                Elite Judges
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6 xl:gap-8 w-full">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <RevealOnScroll key={i} delay={i * 75}>
-                  <div className="group cursor-default text-center">
-                    <div className="w-full aspect-square bg-slate-800/80 rounded-full border border-white/5 overflow-hidden mb-6 relative mx-auto max-w-[200px]">
-                      {/* Avatar Placeholder */}
-                      <div className="absolute inset-0 flex items-center justify-center text-white/10 group-hover:text-amber-400/50 transition-colors">
-                        <Users className="w-12 h-12 xl:w-16 xl:h-16" />
-                      </div>
-                    </div>
-                    <h4 className="font-bold xl:text-xl group-hover:text-amber-400 transition-colors">Top Judge {i}</h4>
-                    <p className="text-xs xl:text-sm text-[var(--text-muted)] mt-1">VC Partner</p>
-                  </div>
-                </RevealOnScroll>
-              ))}
             </div>
           </RevealOnScroll>
         </section>
